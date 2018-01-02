@@ -25,14 +25,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     // We are connected
-                    Log.d("connection", "onSuccess");
+                    Log.i("connection", "onSuccess");
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     // Something went wrong e.g. connection timeout or firewall problems
                     Log.e("comunitationError", exception.getMessage());
-                    Log.d("connection", "onFailure");
 
                 }
             });
