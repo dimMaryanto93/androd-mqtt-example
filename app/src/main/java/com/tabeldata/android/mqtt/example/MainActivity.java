@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
         options.setUserName(username);
         options.setPassword(password.toCharArray());
         options.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1);
+        options.setCleanSession(false);
+        options.setAutomaticReconnect(true);
+
         return options;
     }
 
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
         setContentView(R.layout.activity_main);
 
         try {
-            MqttConnectOptions options = getOptions("rtyoepgj", "f6kj3JqI7nAv");
+            MqttConnectOptions options = getOptions(this.username, this.password);
             this.connection = getConnection("tcp://m14.cloudmqtt.com:13568");
             connection.connect(options);
         } catch (MqttException e) {
