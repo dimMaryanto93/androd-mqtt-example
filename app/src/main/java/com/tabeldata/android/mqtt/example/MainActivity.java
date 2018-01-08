@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -15,11 +17,15 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class MainActivity extends AppCompatActivity implements MqttCallback{
+import java.time.LocalDateTime;
+
+public class MainActivity extends AppCompatActivity implements MqttCallback {
 
     private static final String username = "rtyoepgj";
     private static final String password = "f6kj3JqI7nAv";
     private MqttAndroidClient connection;
+
+    private Switch onOffRoom1;
 
     public MqttConnectOptions getOptions(String username, String password) {
         MqttConnectOptions options = new MqttConnectOptions();
@@ -39,9 +45,18 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
         return client;
     }
 
-    public void connectTo(View view) {
+    public void publish(Boolean onOff) {
         try {
-            IMqttDeliveryToken publisher = this.connection.publish("foo/bar", new MqttMessage("message load!".getBytes()));
+            MqttMessage message;
+            if (onOff)
+                message = new MqttMessage("halo ini dari mqtt publisher on".getBytes());
+            else
+                message = new MqttMessage("halo ini dari mqtt publish off".getBytes());
+
+            IMqttDeliveryToken publisher =
+                    this.connection.publish(
+                            "room1/lamp",
+                            message);
             publisher.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
@@ -64,6 +79,11 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        setup field
+        this.onOffRoom1 = findViewById(R.id.onOffRoom1);
+        this.onOffRoom1.setOnCheckedChangeListener((compoundButton, checked) -> {
+            publish(checked);
+        });
         try {
             MqttConnectOptions options = getOptions(this.username, this.password);
             this.connection = getConnection("tcp://m14.cloudmqtt.com:13568");
@@ -81,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Log.i("topicArrived", "topic yang terkirim "+ topic );
+        Log.i("topicArrived", "topic yang terkirim " + topic);
     }
 
     @Override

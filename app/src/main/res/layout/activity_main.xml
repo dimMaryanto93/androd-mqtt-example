@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tabeldata.android.mqtt.example.MainActivity">
 
+    <Switch
+        android:id="@+id/onOffRoom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Switch" />
+
     <TextView
+        android:id="@+id/labelRoom1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.268" />
+        android:layout_alignBottom="@+id/onOffRoom1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/onOffRoom1"
+        android:layout_toStartOf="@+id/onOffRoom1"
+        android:text="Ruangan 1"
+        android:textAlignment="inherit" />
 
-    <Button
-        android:id="@+id/btnConnection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="connectTo"
-        android:text="Button"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="231dp" />
+    <ListView
+        android:id="@+id/subcribeRoom1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/labelRoom1" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
