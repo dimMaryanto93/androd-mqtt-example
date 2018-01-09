@@ -3,11 +3,6 @@ package com.tabeldata.android.mqtt.example;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -20,8 +15,6 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-
-import java.time.LocalDateTime;
 
 public class MainActivity extends AppCompatActivity implements MqttCallback{
 
