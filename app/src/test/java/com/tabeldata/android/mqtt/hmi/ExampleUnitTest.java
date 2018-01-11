@@ -1,4 +1,4 @@
-package com.tabeldata.android.mqtt.example;
+package com.tabeldata.android.mqtt.hmi;
 
 import org.junit.Test;
 

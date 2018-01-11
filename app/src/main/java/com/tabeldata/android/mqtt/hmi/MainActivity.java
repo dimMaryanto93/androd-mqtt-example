@@ -1,4 +1,4 @@
-package com.tabeldata.android.mqtt.example;
+package com.tabeldata.android.mqtt.hmi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class MainActivity extends AppCompatActivity implements MqttCallback{
 
     private static final String username = "rtyoepgj";
+    private static final String topicLighting = "iot-daimn/lighting";
     private static final String password = "f6kj3JqI7nAv";
     private static final String topic = "room1/lamp";
     private MqttAndroidClient connection;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
             message.setQos(1);
             IMqttDeliveryToken publisher =
                     this.connection.publish(
-                            topic,
+                            topicLighting,
                             message);
             publisher.setActionCallback(new IMqttActionListener() {
                 @Override
@@ -87,12 +88,13 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
         try {
             MqttConnectOptions options = getOptions(this.username, this.password);
             this.connection = getConnection("tcp://m14.cloudmqtt.com:13568");
+            this.connection.setCallback(this);
             IMqttToken connect = connection.connect(options);
             connect.setActionCallback(new IMqttActionListener() {
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     try {
-                        IMqttToken subscribe = connection.subscribe(topic, 0);
+                        IMqttToken subscribe = connection.subscribe(topicLighting, 0);
                         subscribe.setActionCallback(new IMqttActionListener() {
                             @Override
                             public void onSuccess(IMqttToken asyncActionToken) {
@@ -104,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
                                 Log.e("subscribe", exception.getMessage());
                             }
                         });
-                        connection.setCallback(MainActivity.this);
                     } catch (MqttException e) {
                         e.printStackTrace();
                     }
@@ -128,9 +129,10 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Toast.makeText(this, String.format("message %s",
-                new String(message.getPayload())),
-                Toast.LENGTH_SHORT).show();
+        Log.i("topic", new String(message.getPayload()) + new String(" / "+topic));
+//        Toast.makeText(this, String.format("message %s",
+//                new String(message.getPayload())),
+//                Toast.LENGTH_SHORT).show();
     }
 
     @Override

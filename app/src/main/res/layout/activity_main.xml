@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tabeldata.android.mqtt.example.MainActivity">
+    tools:context="com.tabeldata.android.mqtt.hmi.MainActivity">
 
     <Switch
         android:id="@+id/onOffRoom1"
