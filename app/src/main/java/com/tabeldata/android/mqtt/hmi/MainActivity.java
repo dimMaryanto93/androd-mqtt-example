@@ -16,7 +16,7 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class MainActivity extends AppCompatActivity implements MqttCallback{
+public class MainActivity extends AppCompatActivity implements MqttCallback {
 
     private static final String username = "rtyoepgj";
     private static final String topicLighting = "iot-daimn/lighting";
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
                     Log.e("connection", "connection failed");
                 }
+
             });
 
         } catch (MqttException e) {
@@ -129,7 +130,9 @@ public class MainActivity extends AppCompatActivity implements MqttCallback{
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Log.i("topic", new String(message.getPayload()) + new String(" / "+topic));
+        String pesan = String.format("%s : %s", topic, new String(message.getPayload()));
+//        Log.i("topic", new String(message.getPayload()) + new String(" / " + topic));
+        Toast.makeText(this, pesan, Toast.LENGTH_SHORT).show();
 //        Toast.makeText(this, String.format("message %s",
 //                new String(message.getPayload())),
 //                Toast.LENGTH_SHORT).show();
